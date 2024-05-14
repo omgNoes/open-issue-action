@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      # contents: read
+      contents: read
 
     steps:
       - name: Checkout
