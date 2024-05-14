@@ -1,22 +1,22 @@
-name: "Open a Github Issue"
-description: "Opens a github issue"
-author: "Rambam"
+name: 'Open a Github Issue'
+description: 'Opens a github issue'
+author: 'Rambam'
 
 inputs:
   token:
-    description: "Github Token"
+    description: 'Github Token'
     required: true
   title:
-    description: "Issue Title"
+    description: 'Issue Title'
     required: true
   body:
-    description: "Issue Body"
+    description: 'Issue Body'
   assignees:
-    description: "Issue Assignees"
+    description: 'Issue Assignees'
 
 outputs:
   issue: # id of output
-    description: "The issue object as a json string"
+    description: 'The issue object as a json string'
 
 runs:
   using: node20

@@ -14,6 +14,7 @@ async function run() {
 
     const assignee = assignees ? assignees.split('\n') : undefined
 
+    core.debug(`Title: ${title}`)
     core.debug(`Body: ${body}`)
     core.debug(`@: ${JSON.stringify(assignee)}`)
 

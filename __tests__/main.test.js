@@ -115,12 +115,12 @@ describe('action', () => {
     )
   })
 
-  it('accepts a body', async () => {
-    // Accepts the action's body input as return value from core.getInput()
+  it('accepts a title', async () => {
+    // Accepts the action's title input as return value from core.getInput()
     getInputMock.mockImplementation(name => {
       switch (name) {
-        case 'body':
-          return 'This would cool...! Huhhu!'
+        case 'title':
+          return 'Check this out'
         default:
           return ''
       }
@@ -130,13 +130,28 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(
-      1,
-      'Body: This would cool...! Huhhu!'
-    )
+    expect(debugMock).toHaveBeenNthCalledWith(1, 'Title: Check this out')
   })
 
-it('accepts zero assignees', async () => {
+  it('accepts a body', async () => {
+    // Accepts the action's body input as return value from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'body':
+          return 'This would cool...!'
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Verify that all of the core library functions were called correctly
+    expect(debugMock).toHaveBeenNthCalledWith(2, 'Body: This would cool...!')
+  })
+
+  it('accepts zero assignees', async () => {
     // Accepts the action's assignee input as return value from core.getInput()
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -151,7 +166,7 @@ it('accepts zero assignees', async () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(2, '@: undefined')
+    expect(debugMock).toHaveBeenNthCalledWith(3, '@: undefined')
     // expect(debugMock).toHaveBeenNthCalledWith(
     //   2,
     //   expect.stringMatching(timeRegex)
@@ -182,7 +197,7 @@ it('accepts zero assignees', async () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(2, '@: ["alice","bob"]')
+    expect(debugMock).toHaveBeenNthCalledWith(3, '@: ["alice","bob"]')
     // expect(debugMock).toHaveBeenNthCalledWith(
     //   2,
     //   expect.stringMatching(timeRegex)
