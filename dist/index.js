@@ -29204,12 +29204,12 @@ async function run() {
     const title = core.getInput('title', { required: true })
     const body = core.getInput('body')
     const assignees = core.getInput('assignees')
-
-    const assignee = assignees ? assignees.split('\n') : undefined
+      ? core.getInput('assignees').split('\n')
+      : undefined
 
     core.debug(`Title: ${title}`)
     core.debug(`Body: ${body}`)
-    core.debug(`@: ${JSON.stringify(assignee)}`)
+    core.debug(`@: ${JSON.stringify(assignees)}`)
 
     const octokit = github.getOctokit(token)
     core.debug(`octokit: ${JSON.stringify(octokit)}`)
@@ -29220,7 +29220,7 @@ async function run() {
       ...github.context.repo,
       title,
       body,
-      assignee
+      assignees
     })
 
     core.debug(`RepoName: ${github.context.repo.repo}`)

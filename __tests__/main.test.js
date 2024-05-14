@@ -167,22 +167,27 @@ describe('action', () => {
 
     // Verify that all of the core library functions were called correctly
     expect(debugMock).toHaveBeenNthCalledWith(3, '@: undefined')
-    // expect(debugMock).toHaveBeenNthCalledWith(
-    //   2,
-    //   expect.stringMatching(timeRegex)
-    // )
-    // expect(debugMock).toHaveBeenNthCalledWith(
-    //   3,
-    //   expect.stringMatching(timeRegex)
-    // )
-    // expect(setOutputMock).toHaveBeenNthCalledWith(
-    //   1,
-    //   'time',
-    //   expect.stringMatching(timeRegex)
-    // )
   })
 
-  it('accepts some assignees', async () => {
+  it('accepts ONE assignee', async () => {
+    // Accepts the action's assignee input as return value from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'assignees':
+          return 'alice'
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Verify that all of the core library functions were called correctly
+    expect(debugMock).toHaveBeenNthCalledWith(3, '@: ["alice"]')
+  })
+
+  it('accepts a couple of assignees', async () => {
     // Accepts the action's assignee input as return value from core.getInput()
     getInputMock.mockImplementation(name => {
       switch (name) {
