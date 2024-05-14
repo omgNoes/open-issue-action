@@ -7,10 +7,15 @@ const github = require('@actions/github')
  */
 async function run() {
   try {
-    const token = core.getInput(token)
-    const title = core.getInput(title)
-    const body = core.getInput(body)
-    const assignees = core.getInput(assignees)
+    const token = core.getInput('token', { required: true })
+    const title = core.getInput('title', { required: true })
+    const body = core.getInput('body')
+    const assignees = core.getInput('assignees')
+
+    const assignee = assignees ? assignees.split('\n') : undefined
+
+    core.debug(`Body: ${body}`)
+    core.debug(`@: ${JSON.stringify(assignee)}`)
 
     const octokit = github.getOctokit(token)
 
@@ -20,7 +25,7 @@ async function run() {
       ...github.context.repo,
       title,
       body,
-      assignee: assignees ? assignees.split('\n') : undefined
+      assignee
     })
 
     core.setOutput('issue', response.data)
