@@ -19,6 +19,7 @@ async function run() {
     core.debug(`@: ${JSON.stringify(assignees)}`)
 
     const octokit = github.getOctokit(token)
+
     core.debug(`octokit: ${JSON.stringify(octokit)}`)
 
     const response = await octokit.rest.issues.create({

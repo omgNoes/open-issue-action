@@ -15,42 +15,45 @@ const runMock = jest.spyOn(main, 'run')
 
 // Other utilities
 const timeRegex = /^\d{2}:\d{2}:\d{2}/
+const issueRegex = /^"title":""/
 
 describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  // it('sets the time output', async () => {
-  //   // Set the action's inputs as return values from core.getInput()
-  //   getInputMock.mockImplementation(name => {
-  //     switch (name) {
-  //       case 'milliseconds':
-  //         return '500'
-  //       default:
-  //         return ''
-  //     }
-  //   })
+  it('creates an issue with set title and body', async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'title':
+          return 'Catchy title'
+        case 'body':
+          return 'Great body'
+        default:
+          return ''
+      }
+    })
 
-  //   await main.run()
-  //   expect(runMock).toHaveReturned()
+    await main.run()
+    expect(runMock).toHaveReturned()
 
-  //   // Verify that all of the core library functions were called correctly
-  //   expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
-  //   expect(debugMock).toHaveBeenNthCalledWith(
-  //     2,
-  //     expect.stringMatching(timeRegex)
-  //   )
-  //   expect(debugMock).toHaveBeenNthCalledWith(
-  //     3,
-  //     expect.stringMatching(timeRegex)
-  //   )
-  //   expect(setOutputMock).toHaveBeenNthCalledWith(
-  //     1,
-  //     'time',
-  //     expect.stringMatching(timeRegex)
-  //   )
-  // })
+    // Verify that all of the core library functions were called correctly
+    expect(debugMock).toHaveBeenNthCalledWith(1, 'Title: Catchy title')
+    expect(debugMock).toHaveBeenNthCalledWith(2, 'Body: Great body')
+    expect(debugMock).toHaveBeenNthCalledWith(3, '@: undefined')
+    // expect(debugMock).toHaveBeenNthCalledWith(4, 'octokit: blabla')
+    // expect(setOutputMock).toHaveBeenNthCalledWith(
+    //   1,
+    //   'issue',
+    //   expect.stringMatching(/.+"title":"Catchy title"/)
+    // )
+    // expect(setOutputMock).toHaveBeenNthCalledWith(
+    //   1,
+    //   'issue',
+    //   expect.stringMatching(/.+"body":"Great body"/)
+    // )
+  })
 
   // it('sets a failed status', async () => {
   //   // Set the action's inputs as return values from core.getInput()
@@ -138,7 +141,7 @@ describe('action', () => {
     getInputMock.mockImplementation(name => {
       switch (name) {
         case 'body':
-          return 'This would cool...!'
+          return 'This would be cool...!'
         default:
           return ''
       }
@@ -148,7 +151,7 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(2, 'Body: This would cool...!')
+    expect(debugMock).toHaveBeenNthCalledWith(2, 'Body: This would be cool...!')
   })
 
   it('accepts zero assignees', async () => {
