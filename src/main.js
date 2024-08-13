@@ -5,6 +5,7 @@ const github = require('@actions/github')
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
+// eslint-disable-next-line prettier/prettier
 async function run () {
   try {
     const token = core.getInput('token', { required: true })
