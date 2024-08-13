@@ -5,7 +5,7 @@ const github = require('@actions/github')
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
-async function run() {
+async function run () {
   try {
     const token = core.getInput('token', { required: true })
     const title = core.getInput('title', { required: true })
